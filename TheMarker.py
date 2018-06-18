@@ -1,9 +1,31 @@
-﻿import feedparser, os, pdb
-from yattag import Doc,indent
-from lxml import html
-import requests
+# -*- coding: utf-8 -*-
 
-rss = raw_input("""Enter your preferred feed:
+from __future__ import print_function
+from builtins import input
+import os
+import pdb
+try:
+    import feedparser
+except ImportError:
+    print("Error: FeedParser not installed\nInstall using: pip install feedparser")
+    exit()
+try:
+    from yattag import Doc, indent
+except ImportError:
+    print("Error: yattag not installed\nInstall using: pip install yattag")
+    exit()
+try:
+    from lxml import html
+except ImportError:
+    print("Error: lxml not installed\nInstall using: pip install lxml")
+    exit()
+try:
+    import requests
+except ImportError:
+    print("Error: requests not installed\nInstall using: pip install requests")
+    exit()
+
+rss = input("""Enter your preferred feed:
 1 - כל פרשנויות היום
 2 - כל כותרות היום
 3 - כותרות דף הבית
@@ -16,12 +38,12 @@ elif rss=="2":
 else:
     themarker = "http://www.themarker.com/cmlink/1.145"
 
-#print themarker
+# print(themarker)
 
 d = feedparser.parse(themarker)
 
-#Title of Service
-#print d['feed']['title']
+# Title of Service
+# print(d['feed']['title'])
 
 ##Basic HTML template
 doc,tag,text= Doc().tagtext()
@@ -67,4 +89,4 @@ Html_file.close()
 
 os.startfile(Html_file.name, 'open')
 
-#print "DONE"
+# print("DONE")
