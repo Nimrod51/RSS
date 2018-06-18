@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-#from builtins import input
 import os
 import pdb
 
+try:
+    from builtins import input
+except ImportError:
+    print("Error: Future not installed\nInstall using: pip install future")
+    exit()
 try:
     import feedparser
 except ImportError:
