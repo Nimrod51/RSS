@@ -1,7 +1,7 @@
 # RSS
 This python code creates an HTML dynamically from TheMarker.com RSS feed in Hebrew.
 
-Requires FeedParser, Yattag, and lxml (all available via pip install)
+Requires FeedParser, Yattag, lxml, and future if you use Python 2.X (all available via pip install)
 
 ## Installation
 
