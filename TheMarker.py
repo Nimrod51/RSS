@@ -3,6 +3,7 @@
 from __future__ import print_function
 import os
 import pdb
+import sys
 
 try:
     from builtins import input
@@ -77,17 +78,25 @@ with tag ('html', dir = "rtl"):
                 tree = html.fromstring(page.content)
                 textbody = tree.xpath("//section[@class='article__entry h-group']/p[@class='t-body-text']") ##//section[@class='article__entry h-group']/p/child::text()
                 for item in textbody:
-                    raw_text="{0}".format(item.text_content().encode('iso-8859-1','replace'))
-                    utf_text = raw_text.decode('UTF-8', 'ignore')
-                    text(utf_text)
-                    doc.stag('br') #Add linebreaks between paragraphs
-                    doc.stag('br')
-                    #pdb.set_trace()
+                    if sys.version_info[0]<3:
+                        raw_text="{0}".format(item.text_content().encode('iso-8859-1','replace'))
+                        utf_text = raw_text.decode('UTF-8', 'ignore')
+                        text(utf_text)
+                        doc.stag('br') #Add linebreaks between paragraphs
+                        doc.stag('br')
+                        #pdb.set_tracerace()
+                    else:
+                        raw_text=item.text_content().encode('iso-8859-1','replace')
+                        utf_text=raw_text.decode('UTF-8', 'ignore')
+                        text(utf_text)
+                        doc.stag('br') #Add linebreaks between paragraphs
+                        doc.stag('br')
+                        #pdb.set_tracerace()
 
 
 html_str=doc.getvalue().encode('UTF-8', 'ignore')
 
-Html_file= open("TheMarker.html","w")
+Html_file= open("TheMarker.html","wb")
 Html_file.write(html_str)
 Html_file.close()
 
