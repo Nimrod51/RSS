@@ -54,25 +54,32 @@ d = feedparser.parse(themarker)
 doc,tag,text= Doc().tagtext()
 doc.asis('<DOCTYPE html>')
 
+# Add head tag for CSS
+with tag('head'):
+    with tag('link', 
+        ('href','http://serve.fontsproject.com/css?family=Alef:400'),
+        ('rel','stylesheet'),
+        ('type','text/css')
+        ):  text('')
 
 article_text=''
 
 # Loop to create HTML
 with tag ('html', dir = "rtl"):
     with tag ('body'):
-        with tag ('h1', style= "font-family:verdana;"):
+        with tag ('h1', style= "font-family:'Alef', serif;"):
             text (d.feed.title) ##Main title for RSS
         for item in range (len(d.entries)): ##Loop over articles in RSS feed
-            with tag ('h2', style= "font-family:verdana;"): #Article title
+            with tag ('h2', style= "font-family:'Alef', serif;"): #Article title
                 with tag ('a', href=d.entries[item].link): #Add link
                     text (d.entries[item].title)
-            with tag ('p', style= "font-family:verdana; font-weight:bold;font-size: 20px;"): ##Article description
+            with tag ('p', style= "font-family:'Alef', serif; font-weight:bold;font-size: 20px;"): ##Article description
                 text (d.entries[item].description)
             with tag('div', id='photo-container'): #Get picture
                 links=dict(d.entries[item])
                 imageLink=str(links['links'][1]['href'])
                 doc.stag('img', src=imageLink, width="150px", klass="photo") #Input pic in html
-            with tag ('p', style = 'font-family:verdana; font-size: 15px;'): #Article text
+            with tag ('p', style = "font-family:'Alef', serif; font-size: 15px;"): #Article text
                 page=requests.get(d.entries[item].link)
                 tree = html.fromstring(page.content)
                 textbody = tree.xpath("//p")
